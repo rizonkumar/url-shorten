@@ -18,11 +18,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api", shortUrlRoute);
-app.get("/:shortUrl([a-zA-Z0-9_-]{7})", getOriginalUrl);
+app.get("/:shortUrl", getOriginalUrl);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-app.get("*", (req, res) => {
+app.get("/*splat", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 

@@ -45,9 +45,12 @@ export const createShortUrl = async (req, res) => {
   }
 };
 
-export const getOriginalUrl = async (req, res) => {
+export const getOriginalUrl = async (req, res, next) => {
   try {
     const { shortUrl } = req.params;
+    if (!/^[a-zA-Z0-9_-]{7}$/.test(shortUrl)) {
+      return next();
+    }
     const url = await shortUrlModel.findOne({ shortUrl });
 
     if (!url) {
